@@ -1,1 +1,1 @@
-## Color Game
+## Have Fun!
