@@ -1,0 +1,40 @@
+class Solution:
+    # O(Nlog(N))
+    # def maxWidthRamp(self, A: List[int]) -> int:
+    #     res = 0
+    #     m = float('inf')
+    #     sorted_i = sorted(range(len(A)), key=lambda x: A[x])
+    #     for i in sorted_i:
+    #         res = max(res, i-m)
+    #         m = min(m, i)
+    #     return res
+    
+    # O(N)
+    # def maxWidthRamp(self, A: List[int]) -> int:
+    #     stack = []
+    #     for i in range(len(A)):
+    #         if not stack or A[stack[-1]] > A[i]:
+    #             stack.append(i)
+    #     res = 0
+    #     for j in range(len(A))[::-1]:
+    #         while stack and A[stack[-1]] <= A[j]:
+    #             res  = max(res, j-stack.pop())
+    #     return res
+    
+    # O(NlogN)
+    def maxWidthRamp(self, A: List[int]) -> int:
+        stack = []
+        res = 0
+        for i in range(len(A)):
+            if not stack or A[stack[-1]] > A[i]:
+                stack.append(i)
+            else:
+                l, r = 0, len(stack)-1
+                while l < r:
+                    mid = l + (r-l)//2
+                    if A[stack[mid]] > A[i]:
+                        l = mid+1
+                    else:
+                        r = mid
+                res = max(res, i-stack[r])
+        return res
